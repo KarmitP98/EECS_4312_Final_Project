@@ -1,0 +1,42 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+
+body { font-family: Roboto, "Helvetica Neue", sans-serif; margin: 0; }
+
+.spacer {
+  flex: 1 1 auto;
+  }
+
+.company-logo {
+  border-radius: 10px;
+  }
+
+
+.search-icon {
+  cursor: pointer;
+  }
+
+.company-logo-toolbar {
+  border-radius: 5px;
+  cursor: pointer;
+  height: available;
+  width: 50px;
+  }
+
+.store-card {
+  cursor: pointer;
+  }
+
+.store-card:hover {
+  transform: scale(1.01);
+  transition: transform .3s;}
+
+.item-card {
+  cursor: pointer;
+  }
+
+.item-card:hover {
+  transform: scale(1.02);
+  transition: all 0.2s;
+  }
