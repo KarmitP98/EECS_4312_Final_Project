@@ -45,6 +45,10 @@ import { StoreComponent } from './components/store/store.component';
 import { ItemCardComponent } from './components/item-card/item-card.component';
 import { ItemCardDetailComponent } from './components/item-card/item-card-detail/item-card-detail.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { StoresComponent } from './components/user/manager/stores/stores.component';
+import { EditStoreComponent } from './components/user/manager/edit-store/edit-store.component';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatChipsModule } from '@angular/material/chips';
 
 @NgModule( {
              declarations: [
@@ -63,7 +67,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
                StoreEditComponent,
                StoreComponent,
                ItemCardComponent,
-               ItemCardDetailComponent
+               ItemCardDetailComponent,
+               StoresComponent,
+               EditStoreComponent
              ],
              imports: [
                BrowserModule,
@@ -91,6 +97,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
                MatButtonToggleModule,
                MatSidenavModule,
                MatListModule,
+               MatProgressBarModule,
+               MatChipsModule,
                AngularFireModule.initializeApp( environment.firebaseConfig ),
                FormsModule, MatDialogModule, MatTooltipModule
              ],

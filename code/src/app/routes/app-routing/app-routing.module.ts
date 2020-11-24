@@ -12,6 +12,8 @@ import { ManagerComponent } from '../../components/user/manager/manager.componen
 import { AdminComponent } from '../../components/user/admin/admin.component';
 import { StoreComponent } from '../../components/store/store.component';
 import { ShoppinpListViewComponent } from '../../components/shoppinp-list-view/shoppinp-list-view.component';
+import { StoresComponent } from '../../components/user/manager/stores/stores.component';
+import { EditStoreComponent } from '../../components/user/manager/edit-store/edit-store.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'login' },
@@ -25,14 +27,20 @@ const routes: Routes = [
     children: [
       {
         path: 'customer', component: CustomerComponent, children: [
-          { path: '', redirectTo: 'store', pathMatch: 'full' },
-          { path: 'store', component: StoreComponent },
-          { path: 'shopping-list', component: ShoppinpListViewComponent }
+          { path: 'shopping-list', component: ShoppinpListViewComponent },
+          { path: ':sId', component: StoreComponent }
         ]
       },
-      { path: 'manager', component: ManagerComponent },
+      {
+        path: 'manager', component: ManagerComponent, children: [
+          { path: '', redirectTo: 'stores', pathMatch: 'full' },
+          { path: 'stores', component: StoresComponent },
+          { path: ':sId', component: EditStoreComponent }
+        ]
+      },
       {
         path: 'admin', component: AdminComponent, children: [
+          { path: '', redirectTo: 'store-edit', pathMatch: 'full' },
           { path: 'manager-edit', component: ManagerEditComponent },
           { path: 'store-edit', component: StoreEditComponent }
         ]
