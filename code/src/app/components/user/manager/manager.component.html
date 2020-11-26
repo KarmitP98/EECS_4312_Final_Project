@@ -1,15 +1,19 @@
 <mat-toolbar>
   <mat-toolbar-row>
-    <img alt = 'Company Logo'
-         class = 'company-logo-toolbar'
-         routerLink = 'stores'
-         src = 'assets/logo/shoppers-logo-black.jpg'>
+    <img alt='Company Logo'
+         class='company-logo-toolbar'
+         routerLink='stores'
+         src='assets/logo/shoppers-logo-black.jpg'>
     &nbsp;
-    <button mat-button routerLink = 'stores'>Stores</button>
+    <button color='primary' mat-button matTooltip="Stores" routerLink="stores">
+      <mat-icon>shopping_bag</mat-icon>
+    </button>
+    <!--    <button mat-button routerLink = 'stores'>Stores</button>-->
     &nbsp;
-    <span class = 'spacer'></span>
-    <button (click) = 'this.userService.logOut()'
-            color = 'warn' mat-raised-button>Log Out
+    <span class='spacer'></span>
+    <button (click)='this.userService.logOut()'
+            color='warn' mat-raised-button>
+      <mat-icon>power_settings_new</mat-icon>
     </button>
   </mat-toolbar-row>
 </mat-toolbar>

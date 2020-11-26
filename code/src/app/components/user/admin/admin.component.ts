@@ -1,17 +1,17 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ItemDetailModel, ItemModel, StoreModel } from '../../../model/models';
-import { UserService } from '../../../services/user.service';
-import { StoreService } from '../../../services/store.service';
-import { MatDialog } from '@angular/material/dialog';
-import { CATEGORIES } from '../../../shared/constants';
-import { ItemService } from '../../../services/item.service';
-import { Subscription } from 'rxjs';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ItemDetailModel, ItemModel, StoreModel} from '../../../model/models';
+import {UserService} from '../../../services/user.service';
+import {StoreService} from '../../../services/store.service';
+import {MatDialog} from '@angular/material/dialog';
+import {CATEGORIES} from '../../../shared/constants';
+import {ItemService} from '../../../services/item.service';
+import {Subscription} from 'rxjs';
 
-@Component( {
-              selector: 'app-admin',
-              templateUrl: './admin.component.html',
-              styleUrls: [ './admin.component.css' ]
-            } )
+@Component({
+  selector: 'app-admin',
+  templateUrl: './admin.component.html',
+  styleUrls: ['./admin.component.css']
+})
 export class AdminComponent implements OnInit, OnDestroy {
 
 
@@ -107,7 +107,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   }
 
   createItemDetail( i ): ItemDetailModel {
-    const cat = this.categories[Math.floor( Math.random() * 8 )];
+    const cat = this.categories[Math.round(Math.random() * 8)];
     return {
       iId: 't',
       iName: 'Item' + i,

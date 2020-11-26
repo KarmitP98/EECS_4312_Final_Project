@@ -34,9 +34,13 @@ body { font-family: Roboto, "Helvetica Neue", sans-serif; margin: 0; }
 
 .item-card {
   cursor: pointer;
-  }
+}
 
 .item-card:hover {
   transform: scale(1.02);
   transition: all 0.2s;
-  }
+}
+
+.clickable {
+  cursor: pointer;
+}
