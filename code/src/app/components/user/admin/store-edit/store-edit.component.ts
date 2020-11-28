@@ -109,23 +109,28 @@ export class StoreEditComponent implements OnInit, OnDestroy {
   }
 
   addStoreManager(store: StoreModel): void {
-    if (!store.sManagerIds.some(value => value === this.managerId)) {
-      store.sManagerIds.push(this.managerId);
-      if (!store.status) {
-        store.status = true;
+    if (this.managerId.length > 0)
+      if (!store.sManagerIds.some(value => value === this.managerId)) {
+        store.sManagerIds.push(this.managerId);
+        if (!store.status) {
+          store.status = true;
+        }
+        this.storeService.updateStore(store);
+
+        const temp = this.users.filter(
+          value => value.uId === this.managerId)[0];
+
+        if (!temp.mStoreIds) {
+          temp.mStoreIds = [];
+        }
+
+        temp.mStoreIds.push(store.sId);
+        this.userService.updateUser(temp);
+        this.managerId = '';
       }
-      this.storeService.updateStore(store);
+  }
 
-      const temp = this.users.filter(
-        value => value.uId === this.managerId)[0];
-
-      if (!temp.mStoreIds) {
-        temp.mStoreIds = [];
-      }
-
-      temp.mStoreIds.push(store.sId);
-      this.userService.updateUser(temp);
-      this.managerId = '';
-    }
+  getAvailableManagers(store: StoreModel) {
+    return this.users.filter(user => !store.sManagerIds.some(value => value === user.uId));
   }
 }

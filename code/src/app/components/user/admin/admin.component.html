@@ -4,13 +4,20 @@
          class='company-logo-toolbar'
          routerLink='home'
          src='assets/logo/shoppers-logo-black.jpg'>
-    <button (click)='setup()' [disabled]='stores' mat-button>Setup Defaults</button>
+    <!--    <button (click)='setup()'-->
+    <!--            [disabled]='stores.length > 0'-->
+    <!--            matTooltip="Setup Default"-->
+    <!--            mat-button>-->
+    <!--      Setup Defaults-->
+    <!--    </button>-->
     &nbsp;
-    <button mat-button routerLink='manager-edit'>
+    <button mat-button matTooltip="Managers"
+            routerLink='manager-edit'>
       <mat-icon>supervisor_account</mat-icon>
     </button>
     &nbsp;
-    <button mat-button routerLink='store-edit'>
+    <button mat-button matTooltip="Stores"
+            routerLink='store-edit'>
       <mat-icon>storefront</mat-icon>
     </button>
     <span class='spacer'></span>

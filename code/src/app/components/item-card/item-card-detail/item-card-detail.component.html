@@ -11,15 +11,26 @@
 
     <mat-grid-tile class="text-left">
       <div>
-        <h1>Name: <b>{{data.item.itemDetail.iName}}</b></h1>
-        <br>
-        <h3>Description: <b>{{data.item.itemDetail.iDesc}}</b></h3>
-        <br>
+        <h1><b>{{data.item.itemDetail.iName}}</b></h1>
+
+        <h3><b>{{data.item.itemDetail.iDesc}}</b></h3>
+
         <div *ngIf="data.user.uType === 'customer'">
           <h4>Isle: <b>{{data.item.isle}}</b></h4>
 
           <h4>Stock Available: {{data.item.iStoreQuantity}}</h4>
 
+          <div *ngIf="data.item.onSale">
+            <h4>Old Price:
+              <del style="color: red">{{data.item.oldPrice | currency}}</del>
+            </h4>
+            <h2>
+              Price: <b style="color: green">{{data.item.price | currency}}</b></h2>
+          </div>
+          <div *ngIf="!data.item.onSale">
+            <h2>
+              Price: <b>{{data.item.price | currency}}</b></h2>
+          </div>
           <mat-form-field appearance="outline">
             <mat-label>Quantity</mat-label>
             <mat-select [(ngModel)]="quantity"

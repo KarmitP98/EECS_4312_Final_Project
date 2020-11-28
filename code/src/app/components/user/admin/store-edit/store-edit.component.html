@@ -64,9 +64,10 @@
           <mat-select (selectionChange)='addStoreManager(store)'
                       [(ngModel)]='managerId'
                       name='manager'
+                      [disabled]="getAvailableManagers(store).length === 0"
                       placeholder='Add a store manager'>
             <mat-option [value]='""'>Choose a Manager</mat-option>
-            <mat-option *ngFor='let user of users' [value]='user.uId'>{{user.uName}}</mat-option>
+            <mat-option *ngFor='let user of getAvailableManagers(store)' [value]='user.uId'>{{user.uName}}</mat-option>
           </mat-select>
         </mat-form-field>
         <mat-chip-list #chipList aria-label='Manager selection'>

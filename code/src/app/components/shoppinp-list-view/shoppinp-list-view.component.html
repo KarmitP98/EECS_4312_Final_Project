@@ -9,28 +9,18 @@
         <mat-list-item *ngFor='let item of user.currentShoppingList.sItems'>
           <img [src]='item.item.itemDetail.iIcon' alt='i' mat-list-avatar>
           <div mat-line><b>{{item.item.itemDetail.iName}}</b></div>
-          <div mat-line>Store: <b>{{item.iStoreName}}</b></div>
+          <div mat-line>Size: <b>{{getItemSize(item.iSize)}}</b></div>
           <div mat-line>Quanitiy: <b>{{item.iQuantity}}</b>
             &nbsp;&nbsp;&nbsp;
             <button (click)='changeQuantity(item,-1)' mat-icon-button>
-              <mat-icon color='warn'>remove_circle</mat-icon>
+              <mat-icon color='warn'>expand_more</mat-icon>
             </button>&nbsp;
             <button (click)='changeQuantity(item,1)' [disabled]="item.iQuantity === item.item.iStoreQuantity"
                     mat-icon-button>
-              <mat-icon color='accent'>add_circle</mat-icon>
+              <mat-icon color='accent'>expand_less</mat-icon>
             </button>
+            <mat-hint mat-line>Stock: {{item.item.iStoreQuantity}}</mat-hint>
           </div>
-          <!--          <div *ngIf="item.iSize" mat-line>Size:-->
-          <!--            &nbsp;-->
-          <!--            <mat-button-toggle-group (change)="this.userService.updateUser(this.user)"-->
-          <!--                                     [(ngModel)]="item.iSize"-->
-          <!--                                     appearance="legacy">-->
-          <!--              <mat-button-toggle [value]="1"><b>S</b></mat-button-toggle>-->
-          <!--              <mat-button-toggle [value]="2"><b>M</b></mat-button-toggle>-->
-          <!--              <mat-button-toggle [value]="3"><b>L</b></mat-button-toggle>-->
-          <!--              <mat-button-toggle [value]="4"><b>XL</b></mat-button-toggle>-->
-          <!--            </mat-button-toggle-group>-->
-          <!--          </div>-->
           <div mat-line><h4>Price: {{item.iQuantity}} X {{item.item.price | currency}}
             = <b>{{(item.iQuantity * item.item.price) | currency}}</b></h4></div>
           <div mat-line>
@@ -72,7 +62,8 @@
                          style='margin-bottom: 8px;'>
       <mat-expansion-panel-header>
         <mat-panel-title>{{list.lName}}</mat-panel-title>
-        <mat-icon [color]="list.sStatus === 'pending' ? 'primary': list.sStatus === 'cancelled'? 'warn':'accent'">
+        <mat-icon [color]="list.sStatus === 'pending' ? 'primary': list.sStatus === 'cancelled'? 'warn':'accent'"
+                  [matTooltip]="list.sStatus | titlecase">
           save
         </mat-icon>
       </mat-expansion-panel-header>
@@ -80,7 +71,6 @@
         <mat-list-item *ngFor='let item of list.sItems'>
           <img [src]='item.item.itemDetail.iIcon' alt='i' mat-list-avatar>
           <div mat-line><b>{{item.item.itemDetail.iName}}</b></div>
-          <div mat-line>Store: <b>{{item.iStoreName}}</b></div>
           <div mat-line>Quanitiy: <b>{{item.iQuantity}}</b></div>
           <div mat-line>Size: <b>{{getItemSize(item.iSize)}}</b></div>
           <div mat-line>

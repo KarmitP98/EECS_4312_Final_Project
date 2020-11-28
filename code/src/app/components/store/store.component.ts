@@ -85,6 +85,11 @@ export class StoreComponent implements OnInit, OnDestroy {
     return this.store.sItems.filter(value => value.onSale).slice(0, 5);
   }
 
+  getSuggestions() {
+    return this.store.sItems.concat().sort((a, b) => a.iBought > b.iBought ? 1 : -1).slice(0, 4);
+  }
+
+
   showItemDetail(item: any): void {
     const dialogRef = this.dialog.open(ItemCardDetailComponent, {
       data: {item, user: this.user, store: this.store},
