@@ -185,15 +185,19 @@ export class StoreComponent implements OnInit, OnDestroy {
     } else {
 
       let found = false;
-      for (let sl of this.user.shoppingLists) {
-        if (sl.sId === this.user.currentShoppingList.sId && sl.sStatus === 'pending') {
-          sl = this.user.currentShoppingList;
-          found = true;
+      if (this.user.shoppingLists) {
+        for (let sl of this.user.shoppingLists) {
+          if (sl.sId === this.user.currentShoppingList.sId && sl.sStatus === 'pending') {
+            sl = this.user.currentShoppingList;
+            found = true;
+          }
         }
       }
 
       if (!found) {
         if (this.user.currentShoppingList.sItems.length > 0) {
+          if (!this.user.shoppingLists)
+            this.user.shoppingLists = [];
           this.user.shoppingLists.push(this.user.currentShoppingList);
         }
       }

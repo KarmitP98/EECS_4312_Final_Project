@@ -9,6 +9,7 @@
         <mat-list-item *ngFor='let item of user.currentShoppingList.sItems'>
           <img [src]='item.item.itemDetail.iIcon' alt='i' mat-list-avatar>
           <div mat-line><b>{{item.item.itemDetail.iName}}</b></div>
+          <div mat-line>Category: <b>{{item.item.itemDetail.iCategory|titlecase}}</b></div>
           <div mat-line>Size: <b>{{getItemSize(item.iSize)}}</b></div>
           <div mat-line>Quanitiy: <b>{{item.iQuantity}}</b>
             &nbsp;&nbsp;&nbsp;
@@ -71,6 +72,7 @@
         <mat-list-item *ngFor='let item of list.sItems'>
           <img [src]='item.item.itemDetail.iIcon' alt='i' mat-list-avatar>
           <div mat-line><b>{{item.item.itemDetail.iName}}</b></div>
+          <div mat-line>Category: <b>{{item.item.itemDetail.iCategory|titlecase}}</b></div>
           <div mat-line>Quanitiy: <b>{{item.iQuantity}}</b></div>
           <div mat-line>Size: <b>{{getItemSize(item.iSize)}}</b></div>
           <div mat-line>

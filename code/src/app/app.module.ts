@@ -8,7 +8,7 @@ import {environment} from '../environments/environment.prod';
 import {LoginComponent} from './components/login/login.component';
 import {SignUpComponent} from './components/sign-up/sign-up.component';
 import {AppRoutingModule} from './routes/app-routing/app-routing.module';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatSelectModule} from '@angular/material/select';
@@ -57,48 +57,50 @@ import {MatChipsModule} from '@angular/material/chips';
     ManagerComponent,
     AdminComponent,
     UserComponent,
-               ShoppinpListViewComponent,
-               StoreSelectionComponent,
-               ManagerEditComponent,
-               StoreEditComponent,
-               StoreComponent,
-               ItemCardComponent,
-               ItemCardDetailComponent,
-               StoresComponent,
-               EditStoreComponent
-             ],
-             imports: [
-               BrowserModule,
-               AppRoutingModule,
-               BrowserAnimationsModule,
-               MatFormFieldModule,
-               MatProgressSpinnerModule,
-               MatMenuModule,
-               MatIconModule,
-               MatButtonModule,
-               FormsModule,
-               MatToolbarModule,
-               MatFormFieldModule,
-               MatSelectModule,
-               MatDatepickerModule,
-               MatNativeDateModule,
-               MatSlideToggleModule,
-               MatInputModule,
-               MatSnackBarModule, MatCardModule,
-               MatTableModule,
-               MatPaginatorModule,
-               MatExpansionModule,
-               MatBadgeModule,
-               MatGridListModule,
-               MatButtonToggleModule,
-               MatSidenavModule,
-               MatListModule,
-               MatProgressBarModule,
-               MatChipsModule,
-               AngularFireModule.initializeApp( environment.firebaseConfig ),
-               FormsModule, MatDialogModule, MatTooltipModule
-             ],
-             providers: [],
-             bootstrap: [ AppComponent ]
-           } )
-export class AppModule {}
+    ShoppinpListViewComponent,
+    StoreSelectionComponent,
+    ManagerEditComponent,
+    StoreEditComponent,
+    StoreComponent,
+    ItemCardComponent,
+    ItemCardDetailComponent,
+    StoresComponent,
+    EditStoreComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatFormFieldModule,
+    MatProgressSpinnerModule,
+    MatMenuModule,
+    MatIconModule,
+    MatButtonModule,
+    FormsModule,
+    MatToolbarModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatSlideToggleModule,
+    MatInputModule,
+    MatSnackBarModule, MatCardModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatExpansionModule,
+    MatBadgeModule,
+    MatGridListModule,
+    MatButtonToggleModule,
+    MatSidenavModule,
+    MatListModule,
+    MatProgressBarModule,
+    MatChipsModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    FormsModule, MatDialogModule, MatTooltipModule,
+    // ReactiveFormsModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule {
+}

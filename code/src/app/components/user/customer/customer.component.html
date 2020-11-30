@@ -17,7 +17,7 @@
             mat-button
             matTooltip='Shopping List'
             routerLink='shopping-list'>
-      <mat-icon [matBadge]='this.user.currentShoppingList?.sItems.length'
+      <mat-icon [matBadge]='this.user?.currentShoppingList?.sItems.length'
                 matBadgeColor='warn'
                 size='large'>receipt_long
       </mat-icon>
