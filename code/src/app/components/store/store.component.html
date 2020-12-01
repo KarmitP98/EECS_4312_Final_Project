@@ -2,7 +2,27 @@
 <div *ngIf='user'>
 
   <div *ngIf='store'>
-    <h1>Welcome to {{store.sName}}</h1>
+    <h1>Welcome to {{store.sName}}    </h1>
+    <div *ngIf="user.uType === 'manager'">
+      <mat-form-field *ngIf="allItems" appearance="outline">
+        <mat-label>Add Item to Store</mat-label>
+        <mat-select [(ngModel)]="newItem" name="newItem">
+          <mat-option [value]="null">Add a new Item to Store</mat-option>
+          <mat-option *ngFor="let item of getAvailableItems()"
+                      [value]="item">
+            {{item.iName}} - {{item.iCategory}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      &nbsp;
+      <button mat-icon-button color="accent"
+              (click)="addItemToStore(newItem)"
+              [disabled]="!newItem"
+              matTooltip="Add New Item to Store">
+        <mat-icon>add_box</mat-icon>
+      </button>
+      <hr>
+    </div>
     <mat-form-field appearance='outline'>
       <mat-label>Category</mat-label>
       <mat-select [(ngModel)]='category'>

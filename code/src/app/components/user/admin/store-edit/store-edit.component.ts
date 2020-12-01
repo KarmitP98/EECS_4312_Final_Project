@@ -4,6 +4,9 @@ import {StoreService} from '../../../../services/store.service';
 import {ActivatedRoute} from '@angular/router';
 import {StoreModel, UserModel} from '../../../../model/models';
 import {Subscription} from 'rxjs';
+import {MatDialog} from "@angular/material/dialog";
+import {ItemCardDetailComponent} from "../../../item-card/item-card-detail/item-card-detail.component";
+import {AddNewStoreComponent} from "../../../store/add-new-store/add-new-store.component";
 
 @Component({
   selector: 'app-store-edit',
@@ -26,7 +29,8 @@ export class StoreEditComponent implements OnInit, OnDestroy {
 
   constructor(private storeService: StoreService,
               private userService: UserService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private matDialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -132,5 +136,12 @@ export class StoreEditComponent implements OnInit, OnDestroy {
 
   getAvailableManagers(store: StoreModel) {
     return this.users.filter(user => !store.sManagerIds.some(value => value === user.uId));
+  }
+
+  addNewStore() {
+    const dialogRef = this.matDialog.open(AddNewStoreComponent, {
+      width: '95vw',
+      height: '95vh'
+    });
   }
 }

@@ -1,0 +1,83 @@
+<div matDialogTitle>{{this.sName.length > 0 ? this.sName : "Store Name"}}
+  <hr></div>
+<mat-dialog-content>
+  <form #storeForm="ngForm" (ngSubmit)="addNewStore()">
+    <mat-form-field appearance="outline" class="w-25">
+      <mat-label>Store Name</mat-label>
+      <input matInput
+             [(ngModel)]="sName"
+             name="name"
+             type="text"
+             required>
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="outline" class="w-25">
+      <mat-label>Street Name</mat-label>
+      <input matInput
+             [(ngModel)]="street"
+             name="street"
+             type="text"
+             required>
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="outline" class="w-25">
+      <mat-label>City</mat-label>
+      <input matInput
+             [(ngModel)]="city"
+             type="text"
+             name="city"
+             required>
+    </mat-form-field>
+    &nbsp;
+    <mat-form-field appearance="outline" class="w-25">
+      <mat-label>Province</mat-label>
+      <input matInput
+             [(ngModel)]="province"
+             type="text"
+             name="province"
+             maxlength="2"
+             required>
+    </mat-form-field>
+    &nbsp;
+    <mat-form-field appearance="outline" class="w-25">
+      <mat-label>Country</mat-label>
+      <input matInput
+             [(ngModel)]="country"
+             type="text"
+             name="country"
+             required>
+    </mat-form-field>
+    &nbsp;
+    <mat-form-field appearance="outline" class="w-25">
+      <mat-label>Postal Code</mat-label>
+      <input matInput
+             [(ngModel)]="postal"
+             type="text"
+             name="postal"
+             placeholder="A1A 1A1"
+             required>
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="outline" class="w-25">
+      <mat-label>Price Multiplier</mat-label>
+      <input matInput
+             [(ngModel)]="priceMult"
+             type="number"
+             name="priceMult"
+             min="0.5"
+             max="1.5"
+             required>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <hr>
+  <button mat-raised-button color="accent" (click)="addNewStore()"
+  [disabled]="storeForm.invalid">
+    Add New Store
+  </button>
+  &nbsp;
+  <button mat-raised-button color="warn" (click)="matDialog.closeAll()">
+    Cancel
+  </button>
+</mat-dialog-actions>

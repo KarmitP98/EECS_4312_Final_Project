@@ -47,6 +47,7 @@ import {StoresComponent} from './components/user/manager/stores/stores.component
 import {EditStoreComponent} from './components/user/manager/edit-store/edit-store.component';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatChipsModule} from '@angular/material/chips';
+import { AddNewStoreComponent } from './components/store/add-new-store/add-new-store.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +66,8 @@ import {MatChipsModule} from '@angular/material/chips';
     ItemCardComponent,
     ItemCardDetailComponent,
     StoresComponent,
-    EditStoreComponent
+    EditStoreComponent,
+    AddNewStoreComponent
   ],
   imports: [
     BrowserModule,

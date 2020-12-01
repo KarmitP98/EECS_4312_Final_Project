@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ItemModel, ListItem, StoreModel, UserModel} from '../../model/models';
+import {ItemDetailModel, ItemModel, ListItem, StoreModel, UserModel} from '../../model/models';
 import {StoreService} from '../../services/store.service';
 import {Subscription} from 'rxjs';
 import {CATEGORIES} from '../../shared/constants';
@@ -10,6 +10,7 @@ import {ActivatedRoute} from '@angular/router';
 import {UserService} from '../../services/user.service';
 import firebase from 'firebase';
 import Timestamp = firebase.firestore.Timestamp;
+import {ItemService} from "../../services/item.service";
 
 @Component({
   selector: 'app-store',
@@ -27,11 +28,15 @@ export class StoreComponent implements OnInit, OnDestroy {
   items: ItemModel[] = [];
   storeSub: Subscription;
   userSub: Subscription;
+  itemSub: Subscription;
+  allItems: ItemDetailModel[];
+  newItem: ItemDetailModel;
 
   constructor(private storeService: StoreService,
               private userService: UserService,
               private dialog: MatDialog,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private itemService: ItemService) {
   }
 
   ngOnInit(): void {
@@ -54,6 +59,12 @@ export class StoreComponent implements OnInit, OnDestroy {
           }
         }
       });
+
+    this.itemSub = this.itemService.fetchItems()
+      .valueChanges()
+      .subscribe(value => {
+        this.allItems = value;
+      })
 
   }
 
@@ -230,6 +241,34 @@ export class StoreComponent implements OnInit, OnDestroy {
     }
     this.userService.updateUser(this.user);
 
+  }
+
+  addItemToStore(itemDetail: ItemDetailModel) {
+    this.store.sItems.push({
+      itemDetail,
+      onSale: false,
+      iBought: Math.round((Math.random() * 50) + 1),
+      isle: this.getIsle(itemDetail.iCategory),
+      iStatus: "stock",
+      price: itemDetail.iPrice * this.store.sPriceMult,
+      iStoreQuantity: 10,
+      oldPrice: 0
+    });
+    this.storeService.updateStore(this.store);
+    this.newItem = null;
+  }
+
+  private getIsle(category: string) {
+    for (let i = 0; i < this.categories.length; i++) {
+      if (this.categories[i] === category)
+        return (i + 1);
+    }
+  }
+
+  public getAvailableItems() {
+    return this.allItems
+      .filter(item => !this.store.sItems.some(value => value.itemDetail === item))
+      .sort((a, b) => this.getIsle(a.iCategory) > this.getIsle(b.iCategory) ? 1 : -1);
   }
 
 }
