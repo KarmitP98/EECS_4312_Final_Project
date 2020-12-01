@@ -20,7 +20,7 @@
 
           <h4>Stock Available: {{data.item.iStoreQuantity}}</h4>
 
-          <div *ngIf="data.item.onSale">
+          <div *ngIf="onSale">
             <h4>Old Price:
               <del style="color: red">{{data.item.oldPrice | currency}}</del>
             </h4>
@@ -28,7 +28,7 @@
               Price: <b style="color: green">{{data.item.price | currency}}</b></h2>
             <h2>Sale till: <b>{{data.item.onSaleDate.toDate() | date}}</b></h2>
           </div>
-          <div *ngIf="!data.item.onSale">
+          <div *ngIf="!onSale">
             <h2>
               Price: <b>{{data.item.price | currency}}</b></h2>
           </div>
@@ -79,17 +79,17 @@
             <mat-error *ngIf="stock.value < 0" matSuffix>Stock cannot be less than 0!!!</mat-error>
             <br>
             <mat-slide-toggle #sale
-                              [(ngModel)]="data.item.onSale"
-                              [color]="data.item.onSale ? 'accent':'warn'"
+                              [(ngModel)]="onSale"
+                              [color]="onSale ? 'accent':'warn'"
                               labelPosition="before"
                               name="sale"
                               required>
               On Sale?
             </mat-slide-toggle>
             <br>
-            <mat-form-field *ngIf="data.item.onSale" appearance="outline">
+            <mat-form-field *ngIf="onSale" appearance="outline">
               <mat-label>New Price</mat-label>
-              <input [(ngModel)]="newPrice" [required]="data.item.onSale"
+              <input [(ngModel)]="newPrice" [required]="onSale"
                      matInput
                      min="0"
                      name="nPrice"
@@ -100,7 +100,8 @@
               <mat-label>Choose a date</mat-label>
               <input matInput [matDatepicker]="picker"
                      [required]="data.item.onSale"
-                     [(ngModel)]="onSaleDate">
+                     [(ngModel)]="onSaleDate"
+                     name="date">
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
@@ -117,9 +118,9 @@
           mat-raised-button>
     Save Item
   </button>
-<button mat-raised-button (click)="removeItem()" color="warn">
-  Remove Item
-</button>
+  <button (click)="removeItem()" *ngIf="data.user.uType === 'manager'" color="warn" mat-raised-button>
+    Remove Item
+  </button>
   &nbsp;
   <button (click)="addToList()" *ngIf="data.user.uType === 'customer'" color="accent" mat-raised-button>
     Add to List

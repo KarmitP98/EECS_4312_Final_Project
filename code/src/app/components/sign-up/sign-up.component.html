@@ -24,9 +24,13 @@
              maxlength="15"
              name='password'
              placeholder='******'
+             pattern="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{6,15}$"
              required
              type='password'>
     </mat-form-field>
+    <br>
+    <mat-hint><b>Password</b> must have at least 1 <b>Number, lower case and upper case. Min: 6 || Max: 15</b>
+    </mat-hint>
     <br>
     <mat-form-field appearance='outline' class='w-25'>
       <mat-label>Name</mat-label>

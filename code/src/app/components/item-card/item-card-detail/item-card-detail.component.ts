@@ -20,6 +20,7 @@ export class ItemCardDetailComponent implements OnInit {
   available: number[] = [];
   newPrice: number = 0;
   onSaleDate: Timestamp = Timestamp.now();
+  onSale: boolean;
 
   @ViewChild('f', {static: true}) f: NgForm;
 
@@ -29,6 +30,8 @@ export class ItemCardDetailComponent implements OnInit {
               private snackBar: MatSnackBar,
               private matDialog: MatDialog,
               private storeService: StoreService) {
+
+    this.onSale = this.data.item.onSale;
   }
 
   ngOnInit(): void {
@@ -99,7 +102,8 @@ export class ItemCardDetailComponent implements OnInit {
   }
 
   saveItem() {
-    if (this.data.item.onSale) {
+    if (this.onSale) {
+      this.data.item.onSale = this.onSale;
       this.data.item.oldPrice = this.data.item.price;
       this.data.item.price = this.newPrice;
       this.data.item.onSaleDate = this.onSaleDate;
