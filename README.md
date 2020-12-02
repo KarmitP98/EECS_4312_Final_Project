@@ -8,18 +8,18 @@ ShoppersLand Inc. is the leading retail chain in Canada. We offer a large range 
 
 ## Customer:
  #### Email: c1@customer.com
- #### Password: 123456
+ #### Password: Cus123
  
  #### Email: c2@customer.com
- #### Password: 123456
+ #### Password: Cus123
 
 ## Manager:
  #### Email: m1@manager.com
- #### Password: 123456
+ #### Password: Man123
  
  #### Email: m2@manager.com
- #### Password: 123456
+ #### Password: Man123
   
 ## Admin:
  #### Email: a1@admin.com
- #### Password: 123456
+ #### Password: Adm123
