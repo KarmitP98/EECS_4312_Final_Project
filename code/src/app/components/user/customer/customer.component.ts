@@ -42,13 +42,13 @@ export class CustomerComponent implements OnInit, OnDestroy {
     this.loading = true;
 
     setTimeout(() => {
-        if (this.user?.savedStore) {
-          this.loading = false;
-          this.router.navigate([this.user.savedStore],
-            {relativeTo: this.route});
-        } else if (this.user?.preferedStore) {
+        if (this.user?.preferedStore) {
           this.loading = false;
           this.router.navigate([this.user.preferedStore],
+            {relativeTo: this.route});
+        } else if (this.user?.savedStore) {
+          this.loading = false;
+          this.router.navigate([this.user.savedStore],
             {relativeTo: this.route});
         }
         this.loading = false;
@@ -68,21 +68,17 @@ export class CustomerComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-
+        this.loading = true;
         if (result.save) {
           this.user.savedStore = result.store;
         }
         this.user.preferedStore = result.store;
         this.userService.updateUser(this.user);
 
-
         setTimeout(() => {
-            if (this.user) {
-              this.loading = false;
-              this.router.navigate([result.store],
-                {relativeTo: this.route});
-            }
             this.loading = false;
+            this.router.navigate([result.store],
+              {relativeTo: this.route});
           },
           500);
       }

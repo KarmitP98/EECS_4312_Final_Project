@@ -13,7 +13,7 @@
       <div>
         <h1><b>{{data.item.itemDetail.iName}}</b></h1>
 
-        <h3><b>{{data.item.itemDetail.iDesc}}</b></h3>
+        <h2>{{data.item.itemDetail.iDesc}}</h2>
 
         <div *ngIf="data.user.uType === 'customer'">
           <h4>Isle: <b>{{data.item.isle}}</b></h4>
@@ -86,7 +86,7 @@
                               required>
               On Sale?
             </mat-slide-toggle>
-            <br>
+            <br><br>
             <mat-form-field *ngIf="onSale" appearance="outline">
               <mat-label>New Price</mat-label>
               <input [(ngModel)]="newPrice" [required]="onSale"
@@ -95,11 +95,11 @@
                      name="nPrice"
                      type="number">
             </mat-form-field>
-            <br>
-            <mat-form-field *ngIf="data.item.onSale" appearance="outline">
-              <mat-label>Choose a date</mat-label>
+            &nbsp;
+            <mat-form-field *ngIf="onSale" appearance="outline">
+              <mat-label>Sale Until</mat-label>
               <input matInput [matDatepicker]="picker"
-                     [required]="data.item.onSale"
+                     [required]="onSale"
                      [(ngModel)]="onSaleDate"
                      name="date">
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>

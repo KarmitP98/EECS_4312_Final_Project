@@ -61,6 +61,7 @@ export class StoreEditComponent implements OnInit, OnDestroy {
 
   updateStoreStatus(store: StoreModel) {
     this.storeService.updateStore(store);
+    // this.users.filter(value => value.savedStore === store.sId).forEach(value => value.savedStore = "");
   }
 
   filter(type: number) {

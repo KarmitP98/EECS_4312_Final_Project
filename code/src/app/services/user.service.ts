@@ -130,6 +130,7 @@ export class UserService {
       .then((value) => {
         user.uId = value.user.uid;
         this.addNewUser(user);
+        this.showToast("New Manger has been added to the system!");
         this.secondaryApp.auth().signOut();
       })
       .catch((err) => {

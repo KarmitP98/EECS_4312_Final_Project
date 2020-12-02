@@ -1,21 +1,23 @@
 <!--suppress ALL -->
-<mat-toolbar *ngIf='this.user'>
+<mat-toolbar *ngIf='this.user' color="primary">
   <mat-toolbar-row>
     <img [routerLink]='this.user?.preferedStore'
          alt='Company Logo'
          class='company-logo-toolbar'
-         src='assets/logo/shoppers-logo-black.jpg'>
+         src='assets/logo/shoppers-logo-white.jpg'>
     &nbsp;&nbsp;
-    <button [disabled]='!this.user?.preferedStore' [routerLink]='this.user?.preferedStore'
-            color='primary'
+    <button [disabled]='!this.user?.preferedStore'
+            [routerLink]='this.user?.preferedStore'
             mat-button
+            class="menu-button"
             matTooltip="Store">
       <mat-icon>shopping_bag</mat-icon>
     </button>
     &nbsp;
-    <button [disabled]='!this.user?.preferedStore' color='primary'
+    <button [disabled]='!this.user?.preferedStore'
             mat-button
             matTooltip='Shopping List'
+            class="menu-button"
             routerLink='shopping-list'>
       <mat-icon [matBadge]='this.user?.currentShoppingList?.sItems.length'
                 matBadgeColor='warn'
@@ -25,13 +27,18 @@
     &nbsp;
 
     <span class='spacer'></span>
-    <button (click)='selectStore()' [matTooltip]='user?.preferedStore ? "Change Store" : "Select Store"' color='warn'
+    <button (click)='selectStore()'
+            [matTooltip]='user?.preferedStore ? "Change Store" : "Select Store"'
+            class="menu-button"
+            color='warn'
             mat-button>
       <mat-icon>storefront</mat-icon>
       <mat-icon>expand_more</mat-icon>
     </button>
     &nbsp;
-    <button (click)='logOut()' color='warn' mat-raised-button>
+    <button (click)='logOut()'
+            color='warn'
+            mat-raised-button>
       <mat-icon>power_settings_new</mat-icon>
     </button>
   </mat-toolbar-row>

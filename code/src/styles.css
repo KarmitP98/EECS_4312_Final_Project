@@ -46,10 +46,11 @@ body { font-family: Roboto, "Helvetica Neue", sans-serif; margin: 0; }
   cursor: pointer;
 }
 
-/*button {*/
-/*  transition: all .3s ease-in-out;*/
-/*}*/
+.menu-button {
+  transition: transform 0.2s;
+}
 
-/*button:hover {*/
-/*  transform: scale(1.2);*/
-/*}*/
+.menu-button:hover {
+  transform: scale3d(1.2, 1.2, 1.2);
+}
+

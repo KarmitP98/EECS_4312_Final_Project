@@ -1,22 +1,25 @@
-<mat-toolbar>
+<mat-toolbar color="primary">
   <mat-toolbar-row>
     <img alt='Company Logo'
          class='company-logo-toolbar'
          routerLink='home'
-         src='assets/logo/shoppers-logo-black.jpg'>
-        <button (click)='setup()'
-                [disabled]='stores.length > 0'
-                matTooltip="Setup Default"
-                mat-button>
-          Setup Defaults
-        </button>
+         src='assets/logo/shoppers-logo-white.jpg'>
+    <!--        <button (click)='setup()'-->
+    <!--                [disabled]='stores.length > 0'-->
+    <!--                matTooltip="Setup Default"-->
+    <!--                mat-button-->
+    <!--                class="menu-button">-->
+    <!--          Setup Defaults-->
+    <!--        </button>-->
     &nbsp;
     <button mat-button matTooltip="Managers"
+            class="menu-button"
             routerLink='manager-edit'>
       <mat-icon>supervisor_account</mat-icon>
     </button>
     &nbsp;
     <button mat-button matTooltip="Stores"
+            class="menu-button"
             routerLink='store-edit'>
       <mat-icon>storefront</mat-icon>
     </button>

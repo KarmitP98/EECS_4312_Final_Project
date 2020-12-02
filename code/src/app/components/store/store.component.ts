@@ -143,25 +143,35 @@ export class StoreComponent implements OnInit, OnDestroy {
           .toDateString(),
         date: Timestamp.now()
       };
+      this.userService.showToast(
+        item.itemDetail.iName + ' has been added to the Shopping List!',
+        1000);
     } else {
 
       for (const sItem of this.user.currentShoppingList.sItems) {
         if (sItem.item.itemDetail.iName === item.itemDetail.iName && sItem.iStoreId === this.store.sId) {
           found = true;
-          sItem.iQuantity += 1;
+          if (sItem.iQuantity < item.iStoreQuantity) {
+            sItem.iQuantity += 1;
+            this.userService.showToast(
+              item.itemDetail.iName + ' has been added to the Shopping List!',
+              1000);
+          } else {
+            this.userService.showToast(
+              item.itemDetail.iName + ' has reached maximum in-stock items!',
+              1000);
+          }
         }
       }
 
       if (!found) {
         this.user.currentShoppingList.sItems.push(listItem);
+        this.userService.showToast(
+          item.itemDetail.iName + ' has been added to the Shopping List!',
+          1000);
       }
     }
     this.userService.updateUser(this.user);
-
-    this.userService.showToast(
-      item.itemDetail.iName + ' has been added to the Shopping List!',
-      1000);
-
   }
 
   private fetchStore(sId: any): void {

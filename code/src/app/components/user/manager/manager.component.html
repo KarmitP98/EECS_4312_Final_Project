@@ -1,12 +1,13 @@
-<mat-toolbar *ngIf="this.user">
+<mat-toolbar *ngIf="this.user" color="primary">
   <mat-toolbar-row>
     <img alt='Company Logo'
          class='company-logo-toolbar'
          routerLink='stores'
-         src='assets/logo/shoppers-logo-black.jpg'>
+         src='assets/logo/shoppers-logo-white.jpg'>
     &nbsp;
-    <button [disabled]="!this.user.mStoreIds || this.user.mStoreIds?.length === 0" color='primary' mat-button
+    <button [disabled]="!this.user.mStoreIds || this.user.mStoreIds?.length === 0" class="menu-button"
             matTooltip="Stores"
+            mat-button
             routerLink="stores">
       <mat-icon>shopping_bag</mat-icon>
     </button>

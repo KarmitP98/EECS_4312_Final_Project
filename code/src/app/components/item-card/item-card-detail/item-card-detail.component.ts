@@ -63,24 +63,35 @@ export class ItemCardDetailComponent implements OnInit {
           .toDateString(),
         date: Timestamp.now()
       };
+      this.showToast(
+        this.data.item.itemDetail.iName + ' has been added to the Shopping List!',
+        1000);
     } else {
 
       for (const sItem of this.data.user.currentShoppingList.sItems) {
         if (sItem.item.itemDetail.iName === this.data.item.itemDetail.iName && sItem.iStoreId === this.data.store.sId) {
           found = true;
-          sItem.iQuantity += this.quantity;
+          if (sItem.iQuantity < this.data.item.iStoreQuantity) {
+            sItem.iQuantity += this.quantity;
+            this.showToast(
+              this.data.item.itemDetail.iName + ' has been added to the Shopping List!',
+              1000);
+          } else
+            this.showToast(
+              this.data.item.itemDetail.iName + ' has reached the maximum in-store quantity!',
+              1000);
         }
       }
 
       if (!found) {
         this.data.user.currentShoppingList.sItems.push(listItem);
+        this.showToast(
+          this.data.item.itemDetail.iName + ' has been added to the Shopping List!',
+          1000);
       }
     }
     this.userService.updateUser(this.data.user);
 
-    this.showToast(
-      this.data.item.itemDetail.iName + ' has been added to the Shopping List!',
-      1000);
 
     this.matDialog.closeAll();
 

@@ -81,11 +81,12 @@
                 Price: <b style="color: green">{{item.price | currency}}</b>
 
               </mat-card-content>
-              <mat-card-actions align="end">
+              <mat-card-actions *ngIf="user.uType === 'customer'" align="end">
                 <button (click)="addToList(item)"
                         color="accent"
                         mat-icon-button
                         matTooltip="Quick Add to List!"
+                        [disabled]="item.iStoreQuantity === 0"
                         matTooltipPosition="above">
                   <mat-icon>add_shopping_cart</mat-icon>
                 </button>
@@ -131,11 +132,12 @@
                   Location: <b>Isle {{item.isle}}</b>
                   <br>
                   Price: <b>{{item.price | currency}}</b>
-                  <mat-card-actions align="end">
+                  <mat-card-actions *ngIf="user.uType === 'customer'" align="end">
                     <button (click)="addToList(item)"
                             color="accent"
                             mat-icon-button
                             matTooltip="Quick Add to List!"
+                            [disabled]="item.iStoreQuantity === 0"
                             matTooltipPosition="above">
                       <mat-icon>add_shopping_cart</mat-icon>
                     </button>
@@ -179,11 +181,12 @@
               Price: {{item.price | currency}}
 
             </mat-card-content>
-            <mat-card-actions align="end">
+            <mat-card-actions *ngIf="user.uType === 'customer'" align="end">
               <button (click)="addToList(item)"
                       color="accent"
                       mat-icon-button
                       matTooltip="Quick Add to List!"
+                      [disabled]="item.iStoreQuantity === 0"
                       matTooltipPosition="above">
                 <mat-icon>add_shopping_cart</mat-icon>
               </button>
