@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ListItem, StoreModel, UserModel} from '../../model/models';
+import {ListItem, ShoppingList, StoreModel, UserModel} from '../../model/models';
 import {ActivatedRoute} from '@angular/router';
 import {UserService} from '../../services/user.service';
 import {Subscription} from 'rxjs';
@@ -116,5 +116,9 @@ export class ShoppinpListViewComponent implements OnInit, OnDestroy {
     };
 
     this.userService.updateUser(this.user);
+  }
+
+  getCurrentItems(list: ShoppingList) {
+    return list.sItems.sort((a, b) => a.item.isle > b.item.isle ? 1 : -1);
   }
 }

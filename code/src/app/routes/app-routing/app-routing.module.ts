@@ -32,16 +32,15 @@ const routes: Routes = [
       },
       {
         path: 'manager', component: ManagerComponent, children: [
-          { path: '', redirectTo: 'stores', pathMatch: 'full' },
           { path: 'stores', component: StoresComponent },
           {path: ':sId', component: StoreComponent}
         ]
       },
       {
         path: 'admin', component: AdminComponent, children: [
-          { path: '', redirectTo: 'store-edit', pathMatch: 'full' },
-          { path: 'manager-edit', component: ManagerEditComponent },
-          { path: 'store-edit', component: StoreEditComponent }
+          {path: '', redirectTo: 'manager-edit', pathMatch: 'full'},
+          {path: 'manager-edit', component: ManagerEditComponent},
+          {path: 'store-edit', component: StoreEditComponent}
         ]
       }
     ]

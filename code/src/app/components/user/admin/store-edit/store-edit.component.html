@@ -1,4 +1,15 @@
 <div class='text-center container-lg' style='margin-top: 5vh;'>
+
+  <h1>Stores
+    <button (click)="addNewStore()" class="float-right"
+            color="accent"
+            mat-icon-button
+            matTooltip="Add New Store">
+      <mat-icon>add_business</mat-icon>
+    </button>
+  </h1>
+  <hr>
+
   <mat-form-field appearance='outline'>
     <mat-label>Country</mat-label>
     <input (keypress)='keyPress($event, 1)' (keyup)='filter(1)'
@@ -38,16 +49,10 @@
            type='text'>
     <mat-icon (click)='filter(4)' class='search-icon' matSuffix>search</mat-icon>
   </mat-form-field>
-  &nbsp;&nbsp;
-  <button mat-icon-button color="accent"
-          (click)="addNewStore()"
-  matTooltip="Add New Store">
-    <mat-icon>add_business</mat-icon>
-  </button>
-  <hr>
   <div class='text-center'>
 
-    <mat-card *ngFor='let store of stores' class='mat-elevation-z4' style='margin-bottom: 8px;'>
+    <mat-card *ngFor='let store of stores' class='mat-elevation-z4 w-75'
+              style='margin-bottom: 8px; margin-left: 12.5%;'>
       <mat-card-header>
         <div matCardAvatar>
           <mat-icon [color]='store.status ? "accent":"warn"'>storefront</mat-icon>
@@ -60,6 +65,7 @@
         <mat-slide-toggle (change)="updateStoreStatus(store)"
                           [(ngModel)]="store.status"
                           [color]='store.status ? "accent":"warn"'
+                          [disabled]="store.sManagerIds?.length === 0"
                           labelPosition="before"
                           name="status">
           Store Open? :
@@ -79,11 +85,10 @@
         <mat-chip-list #chipList aria-label='Manager selection'>
           <mat-chip (removed)='removeManager(manager, store)'
                     *ngFor='let manager of store.sManagerIds'
-                    [removable]='store.sManagerIds.length > 1'
+                    removable
                     [selectable]='true'>
             {{getManagerName(manager)}}
-            <mat-icon *ngIf='store.sManagerIds.length > 1'
-                      [matTooltip]='"Remove "+getManagerName(manager)+" as manager!"'
+            <mat-icon [matTooltip]='"Remove "+getManagerName(manager)+" as manager!"'
                       matChipRemove>cancel
             </mat-icon>
           </mat-chip>

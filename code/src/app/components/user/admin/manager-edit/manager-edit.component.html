@@ -1,4 +1,13 @@
-<div *ngIf='users' class='text-center container-lg' style='margin-top: 5vh;'>
+<div *ngIf='users' class='text-center container' style='margin-top: 5vh;'>
+
+  <h1>Managers
+    <button (click)="addManager()" class="float-right" color="accent"
+            mat-icon-button
+            matTooltip="Add New Manager">
+      <mat-icon>person_add</mat-icon>
+    </button>
+  </h1>
+  <hr>
 
   <mat-card *ngFor='let user of users' class='text-left mat-elevation-z4 w-50'
             style="margin-bottom: 8px;margin-left: 12.5vw;">
@@ -29,10 +38,17 @@
 
     </mat-card-content>
     <mat-card-actions align="end">
+      <button (click)="removeManager(user)"
+              class="w-50"
+              color="warn"
+              mat-raised-button>
+        REMOVE MANAGER
+      </button>
       <button (click)="save(user)"
               [disabled]="user.uName.length < 1"
-              color="accent"
-              mat-raised-button>Save
+              class="w-50"
+              color="primary"
+              mat-raised-button>Update
       </button>
     </mat-card-actions>
   </mat-card>

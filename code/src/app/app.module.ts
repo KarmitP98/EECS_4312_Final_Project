@@ -8,7 +8,7 @@ import {environment} from '../environments/environment.prod';
 import {LoginComponent} from './components/login/login.component';
 import {SignUpComponent} from './components/sign-up/sign-up.component';
 import {AppRoutingModule} from './routes/app-routing/app-routing.module';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {FormsModule} from '@angular/forms';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatSelectModule} from '@angular/material/select';
@@ -44,10 +44,10 @@ import {ItemCardComponent} from './components/item-card/item-card.component';
 import {ItemCardDetailComponent} from './components/item-card/item-card-detail/item-card-detail.component';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {StoresComponent} from './components/user/manager/stores/stores.component';
-import {EditStoreComponent} from './components/user/manager/edit-store/edit-store.component';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatChipsModule} from '@angular/material/chips';
-import { AddNewStoreComponent } from './components/store/add-new-store/add-new-store.component';
+import {AddNewStoreComponent} from './components/store/add-new-store/add-new-store.component';
+import {AddManagerComponent} from './components/user/manager/add-manager/add-manager.component';
 
 @NgModule({
   declarations: [
@@ -66,8 +66,8 @@ import { AddNewStoreComponent } from './components/store/add-new-store/add-new-s
     ItemCardComponent,
     ItemCardDetailComponent,
     StoresComponent,
-    EditStoreComponent,
-    AddNewStoreComponent
+    AddNewStoreComponent,
+    AddManagerComponent
   ],
   imports: [
     BrowserModule,

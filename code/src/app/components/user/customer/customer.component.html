@@ -40,7 +40,7 @@
 <mat-progress-bar *ngIf='this.loading' mode='query'></mat-progress-bar>
 
 
-<div *ngIf='!this.user?.preferedStore && !this.loading'>
+<div *ngIf='!(this.user?.savedStore || this.user?.preferedStore) && !this.loading'>
   <div class='text-center container' style='margin-top: 40vh; cursor: pointer'>
     <button (click)='selectStore()' color='warn' mat-raised-button>
       <mat-icon>storefront</mat-icon>

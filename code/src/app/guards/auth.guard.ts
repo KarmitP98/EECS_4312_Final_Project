@@ -7,19 +7,20 @@ import {
   RouterStateSnapshot,
   UrlTree
 } from '@angular/router';
-import { Observable } from 'rxjs';
-import { Injectable } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
+import {Observable} from 'rxjs';
+import {Injectable} from '@angular/core';
+import {AngularFireAuth} from '@angular/fire/auth';
 
-@Injectable( {
-               providedIn: 'root'
-             } )
+@Injectable({
+  providedIn: 'root'
+})
 export class AuthGuard implements CanActivate,
-                                  CanDeactivate<any>,
-                                  CanActivateChild {
+  CanDeactivate<any>,
+  CanActivateChild {
 
-  constructor( private afa: AngularFireAuth,
-               private router: Router ) {}
+  constructor(private afa: AngularFireAuth,
+              private router: Router) {
+  }
 
 
   canActivate( route: ActivatedRouteSnapshot,
@@ -45,8 +46,6 @@ export class AuthGuard implements CanActivate,
       const sub = this.afa.authState
                       .subscribe( ( value ) => {
                         if ( value ) {
-                          // resolve( this.router.navigate( [ '/', value.uid ]
-                          // ) );
                           resolve( false );
                         } else {
                           resolve( true );

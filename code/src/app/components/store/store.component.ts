@@ -9,8 +9,8 @@ import {opacityLoadTrigger, pushTrigger} from '../../shared/animations';
 import {ActivatedRoute} from '@angular/router';
 import {UserService} from '../../services/user.service';
 import firebase from 'firebase';
-import Timestamp = firebase.firestore.Timestamp;
 import {ItemService} from "../../services/item.service";
+import Timestamp = firebase.firestore.Timestamp;
 
 @Component({
   selector: 'app-store',
@@ -71,6 +71,7 @@ export class StoreComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.userSub.unsubscribe();
     this.storeSub.unsubscribe();
+    this.itemSub.unsubscribe();
   }
 
   search(sale: boolean) {
@@ -104,8 +105,6 @@ export class StoreComponent implements OnInit, OnDestroy {
   showItemDetail(item: any): void {
     const dialogRef = this.dialog.open(ItemCardDetailComponent, {
       data: {item, user: this.user, store: this.store},
-      width: '50vw',
-      height: '65vh'
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -218,13 +217,14 @@ export class StoreComponent implements OnInit, OnDestroy {
 
       found = false;
 
-      for (let sl of this.user.shoppingLists) {
-        if (sl.sId === this.user.preferedStore && sl.sStatus === 'pending') {
-          this.user.currentShoppingList = sl;
-          this.user.shoppingLists.splice(this.user.shoppingLists.indexOf(sl));
-          found = true;
+      if (this.user.shoppingLists)
+        for (let sl of this.user.shoppingLists) {
+          if (sl.sId === this.user.preferedStore && sl.sStatus === 'pending') {
+            this.user.currentShoppingList = sl;
+            this.user.shoppingLists.splice(this.user.shoppingLists.indexOf(sl));
+            found = true;
+          }
         }
-      }
 
       if (!found) {
         this.user.currentShoppingList = {

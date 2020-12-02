@@ -7,12 +7,15 @@ export class UserModel {
   uEmail: string;
   uProPic: string;
   uType: string;
+  uPassword: string;
   uLevel?: number;
   preferedStore?: string;
   currentShoppingList?: ShoppingList;
   shoppingLists?: ShoppingList[];
   searches?: string[];
   mStoreIds?: string[];
+  disabled?: boolean;
+  savedStore?: string;
 }
 
 export class StoreModel {

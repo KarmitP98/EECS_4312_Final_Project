@@ -6,12 +6,13 @@
     </mat-card-header>
     <mat-card-content>
       <mat-list role='list'>
-        <mat-list-item *ngFor='let item of user.currentShoppingList.sItems'>
+        <mat-list-item *ngFor='let item of getCurrentItems(this.user.currentShoppingList)'>
           <img [src]='item.item.itemDetail.iIcon' alt='i' mat-list-avatar>
           <div mat-line><b>{{item.item.itemDetail.iName}}</b></div>
           <div mat-line>Category: <b>{{item.item.itemDetail.iCategory|titlecase}}</b></div>
+          <div mat-line>Isle: <b>{{item.item.isle}}</b></div>
           <div mat-line>Size: <b>{{getItemSize(item.iSize)}}</b></div>
-          <div mat-line>Quanitiy: <b>{{item.iQuantity}}</b>
+          <div mat-line>Quantity: <b>{{item.iQuantity}}</b>
             &nbsp;&nbsp;&nbsp;
             <button (click)='changeQuantity(item,-1)' mat-icon-button>
               <mat-icon color='warn'>expand_more</mat-icon>
@@ -69,11 +70,12 @@
         </mat-icon>
       </mat-expansion-panel-header>
       <mat-list role='list'>
-        <mat-list-item *ngFor='let item of list.sItems'>
+        <mat-list-item *ngFor='let item of getCurrentItems(list)'>
           <img [src]='item.item.itemDetail.iIcon' alt='i' mat-list-avatar>
           <div mat-line><b>{{item.item.itemDetail.iName}}</b></div>
           <div mat-line>Category: <b>{{item.item.itemDetail.iCategory|titlecase}}</b></div>
-          <div mat-line>Quanitiy: <b>{{item.iQuantity}}</b></div>
+          <div mat-line>Isle: <b>{{item.item.isle}}</b></div>
+          <div mat-line>Quantity: <b>{{item.iQuantity}}</b></div>
           <div mat-line>Size: <b>{{getItemSize(item.iSize)}}</b></div>
           <div mat-line>
             <hr>

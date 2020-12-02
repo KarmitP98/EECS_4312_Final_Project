@@ -49,7 +49,7 @@ export class StoreEditComponent implements OnInit, OnDestroy {
       .valueChanges()
       .subscribe(value => {
         if (value?.length > 0) {
-          this.users = value;
+          this.users = value.filter(value1 => !value1.disabled);
         }
       });
   }
@@ -105,13 +105,15 @@ export class StoreEditComponent implements OnInit, OnDestroy {
 
   removeManager(manager: string, store: StoreModel): void {
     store.sManagerIds.splice(store.sManagerIds.indexOf(manager), 1);
+    if (store.sManagerIds.length === 0) {
+      store.status = false
+      this.users.filter(value => value.savedStore === store.sId).forEach(value => value.savedStore = "");
+    }
     this.storeService.updateStore(store);
 
-    this.users.filter(value => value.uId === manager)[0].mStoreIds.splice(
-      this.users.filter(value => value.uId === manager)[0].mStoreIds.indexOf(
-        store.sId), 1);
-    this.userService.updateUser(
-      this.users.filter(value => value.uId === manager)[0]);
+    const m: UserModel = this.users.filter(value => value.uId === manager)[0];
+    m.mStoreIds.splice(m.mStoreIds.indexOf(store.sId), 1);
+    this.userService.updateUser(m);
 
   }
 
@@ -142,10 +144,7 @@ export class StoreEditComponent implements OnInit, OnDestroy {
   }
 
   addNewStore() {
-    const dialogRef = this.matDialog.open(AddNewStoreComponent, {
-      width: '95vw',
-      height: '95vh'
-    });
+    const dialogRef = this.matDialog.open(AddNewStoreComponent, {});
   }
 
   removeStore(store: StoreModel) {

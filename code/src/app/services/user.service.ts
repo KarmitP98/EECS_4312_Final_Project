@@ -6,6 +6,8 @@ import {Router} from '@angular/router';
 import {BehaviorSubject} from 'rxjs';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {UserModel} from '../model/models';
+import {environment} from "../../environments/environment.prod";
+import firebase from "firebase";
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +15,8 @@ import {UserModel} from '../model/models';
 export class UserService {
 
   private loadingSubject = new BehaviorSubject<boolean>(false);
-  public loginTries = new BehaviorSubject<number>(4);
+  public loginTries = new BehaviorSubject<number>(5);
+  secondaryApp = firebase.initializeApp(environment.firebaseConfig, "Secondary");
 
   constructor(private afs: AngularFirestore,
               private afa: AngularFireAuth,
@@ -122,4 +125,28 @@ export class UserService {
       .delete();
   }
 
+  addManager(user: UserModel, uPassword: string) {
+    this.secondaryApp.auth().createUserWithEmailAndPassword(user.uEmail, uPassword)
+      .then((value) => {
+        user.uId = value.user.uid;
+        this.addNewUser(user);
+        this.secondaryApp.auth().signOut();
+      })
+      .catch((err) => {
+        this.showToast(err.message, 3000);
+        this.loadingSubject.next(false);
+      });
+  }
+
+  deleteAccount(user: UserModel) {
+    this.removeUser(user)
+    this.secondaryApp.auth().signInWithEmailAndPassword(user.uEmail, user.uPassword)
+      .then(value => {
+        this.secondaryApp.auth().currentUser.delete()
+          .then(() => {
+            this.showToast("User has been removed from the system!!!", 3000);
+          });
+        this.secondaryApp.auth().signOut();
+      });
+  }
 }
