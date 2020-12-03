@@ -85,14 +85,24 @@ export class CustomerComponent implements OnInit, OnDestroy {
     });
   }
 
-  logOut(): void {
+  routeTo() {
+    if (this.user.preferedStore) {
+      this.router.navigate([this.user.preferedStore], {relativeTo: this.route});
+    } else if (this.user.savedStore) {
+      this.router.navigate([this.user.savedStore], {relativeTo: this.route});
+    }
+  }
 
+
+  logOut(): void {
     if (this.user.savedStore) {
-      if (this.user.savedStore.length === 0) {
+      if (this.user.savedStore.length > 0) {
+        console.log("Yes Yes");
         this.user.preferedStore = "";
         this.userService.updateUser(this.user);
       }
     } else {
+      console.log("no")
       this.user.preferedStore = "";
       this.userService.updateUser(this.user);
     }

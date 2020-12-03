@@ -6,19 +6,19 @@
          class='company-logo-toolbar'
          src='assets/logo/shoppers-logo-white.jpg'>
     &nbsp;&nbsp;
-    <button [disabled]='!this.user?.preferedStore'
-            [routerLink]='this.user?.preferedStore'
-            mat-button
-            class="menu-button"
-            matTooltip="Store">
+    <button
+      (click)="routeTo()"
+      mat-button
+      class="menu-button"
+      matTooltip="Store">
       <mat-icon>shopping_bag</mat-icon>
     </button>
     &nbsp;
-    <button [disabled]='!this.user?.preferedStore'
-            mat-button
-            matTooltip='Shopping List'
-            class="menu-button"
-            routerLink='shopping-list'>
+    <button
+      mat-button
+      matTooltip='Shopping List'
+      class="menu-button"
+      routerLink='shopping-list'>
       <mat-icon [matBadge]='this.user?.currentShoppingList?.sItems.length'
                 matBadgeColor='warn'
                 size='large'>receipt_long
