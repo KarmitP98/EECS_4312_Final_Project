@@ -4,8 +4,8 @@ import {ItemModel, ListItem, StoreModel, UserModel} from '../../../model/models'
 import {UserService} from '../../../services/user.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import firebase from 'firebase';
-import {StoreService} from "../../../services/store.service";
-import {NgForm} from "@angular/forms";
+import {StoreService} from '../../../services/store.service';
+import {NgForm} from '@angular/forms';
 import Timestamp = firebase.firestore.Timestamp;
 
 @Component({
@@ -18,9 +18,10 @@ export class ItemCardDetailComponent implements OnInit {
   quantity: number = 1;
   size: number = 2;
   available: number[] = [];
-  newPrice: number = 0;
+  newPrice: number = 10;
   onSaleDate: Timestamp = Timestamp.now();
   onSale: boolean;
+  price: number;
 
   @ViewChild('f', {static: true}) f: NgForm;
 
@@ -38,8 +39,9 @@ export class ItemCardDetailComponent implements OnInit {
     for (let i = 1; i <= this.data.item.iStoreQuantity; i++) {
       this.available.push(i);
     }
-    if (this.data.item.onSale)
+    if (this.data.item.onSale) {
       this.newPrice = this.data.item.price;
+    }
   }
 
   addToList(): void {
@@ -76,10 +78,11 @@ export class ItemCardDetailComponent implements OnInit {
             this.showToast(
               this.data.item.itemDetail.iName + ' has been added to the Shopping List!',
               1000);
-          } else
+          } else {
             this.showToast(
               this.data.item.itemDetail.iName + ' has reached the maximum in-store quantity!',
               1000);
+          }
         }
       }
 
@@ -113,22 +116,26 @@ export class ItemCardDetailComponent implements OnInit {
   }
 
   saveItem() {
+
+    this.data.item.onSale = this.onSale;
     if (this.onSale) {
-      this.data.item.onSale = this.onSale;
       this.data.item.oldPrice = this.data.item.price;
       this.data.item.price = this.newPrice;
       this.data.item.onSaleDate = this.onSaleDate;
+    } else if (!this.onSale) {
+      this.data.item.price = this.data.item.oldPrice;
     }
 
+
     this.storeService.updateStore(this.data.store);
-    this.showToast("Item has been updated!");
+    this.showToast('Item has been updated!');
     this.matDialog.closeAll();
   }
 
   removeItem() {
     this.data.store.sItems.splice(this.data.store.sItems.indexOf(this.data.item), 1);
     this.storeService.updateStore(this.data.store);
-    this.showToast(this.data.item.itemDetail.iName + " has been remove from " + this.data.store.sName + "!!!");
+    this.showToast(this.data.item.itemDetail.iName + ' has been remove from ' + this.data.store.sName + '!!!');
     this.matDialog.closeAll();
   }
 }

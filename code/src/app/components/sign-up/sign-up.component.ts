@@ -14,7 +14,8 @@ export class SignUpComponent implements OnInit {
   uPassword: string;
   uPasswordAgain: string;
   uName: string;
-  pattern = "^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$";
+  pattern = '^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$';
+
   // signUpForm: FormGroup;
 
   constructor(private userService: UserService) {

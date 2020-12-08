@@ -26,13 +26,13 @@ const routes: Routes = [
     children: [
       {
         path: 'customer', component: CustomerComponent, children: [
-          { path: 'shopping-list', component: ShoppinpListViewComponent },
-          { path: ':sId', component: StoreComponent }
+          {path: 'shopping-list', component: ShoppinpListViewComponent},
+          {path: ':sId', component: StoreComponent}
         ]
       },
       {
         path: 'manager', component: ManagerComponent, children: [
-          { path: 'stores', component: StoresComponent },
+          {path: 'stores', component: StoresComponent},
           {path: ':sId', component: StoreComponent}
         ]
       },

@@ -63,7 +63,7 @@ export class CustomerComponent implements OnInit, OnDestroy {
 
   selectStore(): any {
     const dialogRef = this.dialog.open(StoreSelectionComponent, {
-      data: this.user,
+      data: this.user
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -95,17 +95,8 @@ export class CustomerComponent implements OnInit, OnDestroy {
 
 
   logOut(): void {
-    if (this.user.savedStore) {
-      if (this.user.savedStore.length > 0) {
-        console.log("Yes Yes");
-        this.user.preferedStore = "";
-        this.userService.updateUser(this.user);
-      }
-    } else {
-      console.log("no")
-      this.user.preferedStore = "";
-      this.userService.updateUser(this.user);
-    }
+    this.user.preferedStore = '';
+    this.userService.updateUser(this.user);
     this.userService.logOut();
   }
 

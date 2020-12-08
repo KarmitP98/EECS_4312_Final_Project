@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from '../../../services/user.service';
-import {UserModel} from "../../../model/models";
-import {ActivatedRoute, Router} from "@angular/router";
-import {StoreService} from "../../../services/store.service";
+import {UserModel} from '../../../model/models';
+import {ActivatedRoute, Router} from '@angular/router';
+import {StoreService} from '../../../services/store.service';
 
 @Component({
   selector: 'app-manager',
@@ -23,20 +23,22 @@ export class ManagerComponent implements OnInit {
 
     const uId = this.route.snapshot.parent.params.uId;
 
-    const sub = this.userService.fetchUser("uId", "==", uId)
+    const sub = this.userService.fetchUser('uId', '==', uId)
       .valueChanges()
       .subscribe(value => {
-        if (value?.length > 0)
+        if (value?.length > 0) {
           this.user = value[0];
-        if (!this.user.disabled)
-          this.router.navigate(["stores"], {relativeTo: this.route});
+        }
+        if (!this.user.disabled) {
+          this.router.navigate(['stores'], {relativeTo: this.route});
+        }
         sub.unsubscribe();
-      })
+      });
 
   }
 
   getStores() {
-    return this.storeService.fetchStore("sManagerIds", "array-contains", this.user.uId)
+    return this.storeService.fetchStore('sManagerIds', 'array-contains', this.user.uId)
       .valueChanges()
       .toPromise()
       .then((value) => {

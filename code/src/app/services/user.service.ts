@@ -6,17 +6,17 @@ import {Router} from '@angular/router';
 import {BehaviorSubject} from 'rxjs';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {UserModel} from '../model/models';
-import {environment} from "../../environments/environment.prod";
-import firebase from "firebase";
+import {environment} from '../../environments/environment.prod';
+import firebase from 'firebase';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  private loadingSubject = new BehaviorSubject<boolean>(false);
   public loginTries = new BehaviorSubject<number>(5);
-  secondaryApp = firebase.initializeApp(environment.firebaseConfig, "Secondary");
+  secondaryApp = firebase.initializeApp(environment.firebaseConfig, 'Secondary');
+  private loadingSubject = new BehaviorSubject<boolean>(false);
 
   constructor(private afs: AngularFirestore,
               private afa: AngularFireAuth,
@@ -34,15 +34,15 @@ export class UserService {
         this.loadingSubject.next(false);
       })
       .catch((err) => {
-        console.log(err.code)
+        console.log(err.code);
         switch (err.code) {
-          case "auth/wrong-password":
-            const st: string = "\nLogin Attempts Remaining: " + (this.loginTries.value - 1);
+          case 'auth/wrong-password':
+            const st: string = '\nLogin Attempts Remaining: ' + (this.loginTries.value - 1);
             this.showToast(err.message + st, 4000);
             this.loginTries.next(this.loginTries.value - 1);
             break;
-          case "auth/too-many-requests":
-            this.showToast("Your account has been temporarily suspended! Please try again later!", 4000);
+          case 'auth/too-many-requests':
+            this.showToast('Your account has been temporarily suspended! Please try again later!', 4000);
             this.loginTries.next(this.loginTries.value - 1);
             break;
           default:
@@ -55,21 +55,17 @@ export class UserService {
 
   public signUpWithEmail(user: UserModel, password: string) {
 
-    this.loadingSubject.next(true);
 
     this.afa.createUserWithEmailAndPassword(user.uEmail, password)
       .then((value) => {
 
         user.uId = value.user.uid;
-
         this.addNewUser(user);
 
         this.router.navigate(['/', value.user.uid]);
-        this.loadingSubject.next(false);
       })
       .catch((err) => {
         this.showToast(err.message, 3000);
-        this.loadingSubject.next(false);
       });
 
   }
@@ -130,7 +126,7 @@ export class UserService {
       .then((value) => {
         user.uId = value.user.uid;
         this.addNewUser(user);
-        this.showToast("New Manger has been added to the system!");
+        this.showToast('New Manger has been added to the system!');
         this.secondaryApp.auth().signOut();
       })
       .catch((err) => {
@@ -140,12 +136,12 @@ export class UserService {
   }
 
   deleteAccount(user: UserModel) {
-    this.removeUser(user)
+    this.removeUser(user);
     this.secondaryApp.auth().signInWithEmailAndPassword(user.uEmail, user.uPassword)
       .then(value => {
         this.secondaryApp.auth().currentUser.delete()
           .then(() => {
-            this.showToast("User has been removed from the system!!!", 3000);
+            this.showToast('User has been removed from the system!!!', 3000);
           });
         this.secondaryApp.auth().signOut();
       });

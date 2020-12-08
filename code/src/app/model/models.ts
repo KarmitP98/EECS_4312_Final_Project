@@ -42,7 +42,7 @@ export class ItemModel {
   isle: number;
   iBought: number;
   oldPrice?: number;
-  onSaleDate?: Timestamp
+  onSaleDate?: Timestamp;
 }
 
 export class ListItem {

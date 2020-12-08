@@ -1,14 +1,14 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { UserService } from '../../services/user.service';
-import { UserModel } from '../../model/models';
-import { Subscription } from 'rxjs';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {UserService} from '../../services/user.service';
+import {UserModel} from '../../model/models';
+import {Subscription} from 'rxjs';
 
-@Component( {
-              selector: 'app-user',
-              templateUrl: './user.component.html',
-              styleUrls: [ './user.component.css' ]
-            } )
+@Component({
+  selector: 'app-user',
+  templateUrl: './user.component.html',
+  styleUrls: ['./user.component.css']
+})
 export class UserComponent implements OnInit, OnDestroy {
 
   user: UserModel;

@@ -1,4 +1,4 @@
-import {AbstractControl, ValidationErrors, ValidatorFn} from "@angular/forms";
+import {AbstractControl, ValidationErrors, ValidatorFn} from '@angular/forms';
 
 export const CATEGORIES: string[] = [
   'snacks',
@@ -34,7 +34,7 @@ export class CustomValidators {
     // compare is the password math
     if (password !== confirmPassword) {
       // if they don't match, set an error in our confirmPassword form control
-      control.get('confirmPassword').setErrors({ NoPasswordMatch: true });
+      control.get('confirmPassword').setErrors({NoPasswordMatch: true});
     }
   }
 }

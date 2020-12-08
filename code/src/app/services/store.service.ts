@@ -1,16 +1,17 @@
-import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { StoreModel } from '../model/models';
+import {Injectable} from '@angular/core';
+import {AngularFirestore} from '@angular/fire/firestore';
+import {StoreModel} from '../model/models';
 
-@Injectable( {
-               providedIn: 'root'
-             } )
+@Injectable({
+  providedIn: 'root'
+})
 export class StoreService {
 
-  constructor( private afs: AngularFirestore ) { }
+  constructor(private afs: AngularFirestore) {
+  }
 
-  public fetchStore( child?, condition?, value? ) {
-    if ( child ) {
+  public fetchStore(child?, condition?, value?) {
+    if (child) {
       return this.afs.collection<StoreModel>( 'stores', ref => ref.where( child,
                                                                           condition,
                                                                           value ) );

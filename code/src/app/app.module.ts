@@ -98,7 +98,7 @@ import {AddManagerComponent} from './components/user/manager/add-manager/add-man
     MatProgressBarModule,
     MatChipsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
-    FormsModule, MatDialogModule, MatTooltipModule,
+    FormsModule, MatDialogModule, MatTooltipModule
     // ReactiveFormsModule
   ],
   providers: [],

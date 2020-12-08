@@ -1,3 +1,26 @@
 .sale-container {
-  border: lightgrey 1px solid;
+  align-items: center;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  overflow-x: auto;
 }
+
+.suggested-container {
+  align-items: center;
+  display: inline-flex;
+  height: 100%;
+  justify-content: center;
+  min-width: 480px;
+  overflow-x: hidden;
+  position: relative;
+}
+
+.suggest {
+  background: rgba(255, 0, 0, 0.1);
+}
+
+.sale {
+  background: rgba(0, 0, 255, 0.2);
+}
+

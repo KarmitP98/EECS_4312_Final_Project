@@ -134,8 +134,9 @@ export class AdminComponent implements OnInit, OnDestroy {
 
   getIsle(cat: string): number {
     for (let i = 0; i < this.categories.length; i++) {
-      if (this.categories[i] === cat)
-        return (i+1);
+      if (this.categories[i] === cat) {
+        return (i + 1);
+      }
     }
   }
 }

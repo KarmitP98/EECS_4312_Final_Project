@@ -23,13 +23,13 @@ export class AuthGuard implements CanActivate,
   }
 
 
-  canActivate( route: ActivatedRouteSnapshot,
-               state: RouterStateSnapshot ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+  canActivate(route: ActivatedRouteSnapshot,
+              state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
-    return new Promise( resolve => {
+    return new Promise(resolve => {
       const sub = this.afa.authState
-                      .subscribe( ( value ) => {
-                        if ( value ) {
+        .subscribe((value) => {
+          if (value) {
                           resolve( true );
                         } else {
                           resolve( this.router.navigate( [ '/login' ] ) );

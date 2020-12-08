@@ -4,8 +4,8 @@ import {UserService} from '../../../../services/user.service';
 import {StoreModel, UserModel} from '../../../../model/models';
 import {Subscription} from 'rxjs';
 import {MatDialog} from '@angular/material/dialog';
-import {AddManagerComponent} from "../../manager/add-manager/add-manager.component";
-import {StoreService} from "../../../../services/store.service";
+import {AddManagerComponent} from '../../manager/add-manager/add-manager.component';
+import {StoreService} from '../../../../services/store.service';
 
 @Component({
   selector: 'app-manager-edit',
@@ -39,9 +39,10 @@ export class ManagerEditComponent implements OnInit, OnDestroy {
     this.storeSub = this.storeService.fetchStore()
       .valueChanges()
       .subscribe(value => {
-        if (value?.length > 0)
+        if (value?.length > 0) {
           this.stores = value;
-      })
+        }
+      });
 
   }
 
@@ -58,7 +59,7 @@ export class ManagerEditComponent implements OnInit, OnDestroy {
 
     for (let store of this.stores.filter(value => value.sManagerIds.some(value1 => value1 === user.uId))) {
       store.sManagerIds.splice(store.sManagerIds.indexOf(user.uId), 1);
-      store.sManagerIds.length === 0 ? store.status = false : "";
+      store.sManagerIds.length === 0 ? store.status = false : '';
       this.storeService.updateStore(store);
     }
 

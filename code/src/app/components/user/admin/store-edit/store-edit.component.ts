@@ -4,8 +4,8 @@ import {StoreService} from '../../../../services/store.service';
 import {ActivatedRoute} from '@angular/router';
 import {StoreModel, UserModel} from '../../../../model/models';
 import {Subscription} from 'rxjs';
-import {MatDialog} from "@angular/material/dialog";
-import {AddNewStoreComponent} from "../../../store/add-new-store/add-new-store.component";
+import {MatDialog} from '@angular/material/dialog';
+import {AddNewStoreComponent} from '../../../store/add-new-store/add-new-store.component';
 
 declare function confirmation(): boolean;
 
@@ -107,8 +107,8 @@ export class StoreEditComponent implements OnInit, OnDestroy {
   removeManager(manager: string, store: StoreModel): void {
     store.sManagerIds.splice(store.sManagerIds.indexOf(manager), 1);
     if (store.sManagerIds.length === 0) {
-      store.status = false
-      this.users.filter(value => value.savedStore === store.sId).forEach(value => value.savedStore = "");
+      store.status = false;
+      this.users.filter(value => value.savedStore === store.sId).forEach(value => value.savedStore = '');
     }
     this.storeService.updateStore(store);
 
@@ -119,7 +119,7 @@ export class StoreEditComponent implements OnInit, OnDestroy {
   }
 
   addStoreManager(store: StoreModel): void {
-    if (this.managerId.length > 0)
+    if (this.managerId.length > 0) {
       if (!store.sManagerIds.some(value => value === this.managerId)) {
         store.sManagerIds.push(this.managerId);
         if (!store.status) {
@@ -138,10 +138,11 @@ export class StoreEditComponent implements OnInit, OnDestroy {
         this.userService.updateUser(temp);
         this.managerId = '';
       }
+    }
   }
 
   getAvailableManagers(store: StoreModel) {
-    return this.users.filter(user => user.uType === "manager" && !store.sManagerIds.some(value => value === user.uId));
+    return this.users.filter(user => user.uType === 'manager' && !store.sManagerIds.some(value => value === user.uId));
   }
 
   addNewStore() {
@@ -152,11 +153,11 @@ export class StoreEditComponent implements OnInit, OnDestroy {
     if (confirmation()) {
       const sId = store.sId;
       for (let user of this.users) {
-        if (user.uType === "customer" && user.preferedStore === sId) {
-          user.preferedStore = "";
+        if (user.uType === 'customer' && user.preferedStore === sId) {
+          user.preferedStore = '';
           this.userService.updateUser(user);
         }
-        if (user.uType === "manager" && user.mStoreIds.some(id => id === sId)) {
+        if (user.uType === 'manager' && user.mStoreIds.some(id => id === sId)) {
           user.mStoreIds.splice(user.mStoreIds.indexOf(sId), 1);
           this.userService.updateUser(user);
         }
@@ -164,7 +165,7 @@ export class StoreEditComponent implements OnInit, OnDestroy {
 
       this.storeService.deleteStore(store);
 
-      this.userService.showToast("Store " + store.sName + " has been successfully removed!!!");
+      this.userService.showToast('Store ' + store.sName + ' has been successfully removed!!!');
 
     }
   }

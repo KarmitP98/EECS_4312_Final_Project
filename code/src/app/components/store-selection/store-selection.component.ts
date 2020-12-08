@@ -40,7 +40,7 @@ export class StoreSelectionComponent implements OnInit, OnDestroy {
           this.allStores = value
             .sort(
               a => a.sId === this.data.savedStore ? -1 : 1)
-            .filter(value1 => value1.status)
+            .filter(value1 => value1.status);
           this.stores = this.allStores;
         }
       });

@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {ItemDetailModel, ItemModel, ListItem, StoreModel, UserModel} from '../../model/models';
 import {StoreService} from '../../services/store.service';
 import {Subscription} from 'rxjs';
@@ -9,7 +9,7 @@ import {opacityLoadTrigger, pushTrigger} from '../../shared/animations';
 import {ActivatedRoute} from '@angular/router';
 import {UserService} from '../../services/user.service';
 import firebase from 'firebase';
-import {ItemService} from "../../services/item.service";
+import {ItemService} from '../../services/item.service';
 import Timestamp = firebase.firestore.Timestamp;
 
 @Component({
@@ -31,6 +31,9 @@ export class StoreComponent implements OnInit, OnDestroy {
   itemSub: Subscription;
   allItems: ItemDetailModel[];
   newItem: ItemDetailModel;
+  itemsPerRow: number = 3;
+
+  windowWidth: number;
 
   constructor(private storeService: StoreService,
               private userService: UserService,
@@ -39,7 +42,17 @@ export class StoreComponent implements OnInit, OnDestroy {
               private itemService: ItemService) {
   }
 
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.setRows(event.target.innerWidth);
+  }
+
   ngOnInit(): void {
+
+    this.windowWidth = window.innerWidth;
+
+    this.setRows(this.windowWidth);
+
     const uId = this.route.snapshot.parent.parent.params.uId;
     const sId = this.route.snapshot.params.sId;
 
@@ -51,7 +64,6 @@ export class StoreComponent implements OnInit, OnDestroy {
         if (value?.length > 0) {
           this.user = value[0];
           if (this.user.uType === 'customer') {
-
             setTimeout(() => {
               this.updateUserShoppingList();
               this.userSub.unsubscribe();
@@ -64,8 +76,36 @@ export class StoreComponent implements OnInit, OnDestroy {
       .valueChanges()
       .subscribe(value => {
         this.allItems = value;
-      })
+      });
 
+  }
+
+  search(sale: boolean, row?: number) {
+    if (sale) {
+      return this.store.sItems.filter(value => !value.onSale);
+    } else if (this.category) {
+
+      if (!row) {
+        return this.store.sItems.filter(
+          item => !item.onSale && item.itemDetail.iCategory === this.category &&
+            item.itemDetail.iName.toLowerCase().includes(
+              this.itemName.toLowerCase()));
+      }
+
+      return this.store.sItems.filter(
+        item => !item.onSale && item.itemDetail.iCategory === this.category &&
+          item.itemDetail.iName.toLowerCase().includes(
+            this.itemName.toLowerCase())).slice(this.itemsPerRow * (row - 1), (this.itemsPerRow * row));
+    } else {
+      if (!row) {
+        return this.store.sItems.filter(
+          item => item.itemDetail.iName.toLowerCase().includes(this.itemName.toLowerCase()));
+      }
+
+      return this.store.sItems.filter(
+        item => item.itemDetail.iName.toLowerCase().includes(this.itemName.toLowerCase())).slice(this.itemsPerRow * (row - 1),
+        (this.itemsPerRow * row));
+    }
   }
 
   ngOnDestroy(): void {
@@ -74,37 +114,36 @@ export class StoreComponent implements OnInit, OnDestroy {
     this.itemSub.unsubscribe();
   }
 
-  search(sale: boolean) {
-    if (sale) {
-      return this.store.sItems.filter(value => !value.onSale);
-    } else if (this.category) {
-      return this.store.sItems.filter(
-        item => !item.onSale && item.itemDetail.iCategory === this.category &&
-          item.itemDetail.iName.toLowerCase().includes(
-            this.itemName.toLowerCase()));
-    } else {
-      return this.store.sItems.filter(
-        item => !item.onSale && item.itemDetail.iName.toLowerCase().includes(
-          this.itemName.toLowerCase()));
+  getRows(n: number) {
+    const rows: number[] = [];
+    for (let i = 1; i <= Math.floor(n / this.itemsPerRow) + (n % this.itemsPerRow > 0 ? 1 : 0); i++) {
+      rows.push(i);
     }
+
+    return rows;
   }
 
-  getNonSaleItems() {
+  getNonSaleItems(row?: number): ItemModel[] {
+    if (row) {
+      return this.store.sItems.filter(value => !value.onSale).slice(this.itemsPerRow * (row - 1), (this.itemsPerRow * row));
+    }
     return this.store.sItems.filter(value => !value.onSale);
   }
 
-  getSaleItems() {
-    return this.store.sItems.filter(value => value.onSale).slice(0, 5);
+  getSaleItems(row?: number) {
+    if (row) {
+      return this.store.sItems.filter(value => value.onSale).slice(this.itemsPerRow * (row - 1), (this.itemsPerRow * row));
+    }
+    return this.store.sItems.filter(value => value.onSale);
   }
 
-  getSuggestions() {
-    return this.store.sItems.concat().sort((a, b) => a.iBought > b.iBought ? 1 : -1).slice(0, 4);
+  getSuggestions(row?: number) {
+    return this.store.sItems.concat().sort((a, b) => a.iBought > b.iBought ? 1 : -1).slice(0, 3);
   }
-
 
   showItemDetail(item: any): void {
     const dialogRef = this.dialog.open(ItemCardDetailComponent, {
-      data: {item, user: this.user, store: this.store},
+      data: {item, user: this.user, store: this.store}
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -116,7 +155,7 @@ export class StoreComponent implements OnInit, OnDestroy {
 
   public getStoreName() {
     return setTimeout(() => {
-      return this.store.sName
+      return this.store.sName;
     }, 500);
 
   }
@@ -124,7 +163,7 @@ export class StoreComponent implements OnInit, OnDestroy {
   addToList(item: ItemModel): void {
 
     const listItem: ListItem = {
-      item: item,
+      item,
       iQuantity: 1,
       iStoreId: this.store.sId,
       iStoreName: this.store.sName,
@@ -174,6 +213,38 @@ export class StoreComponent implements OnInit, OnDestroy {
     this.userService.updateUser(this.user);
   }
 
+  addItemToStore(itemDetail: ItemDetailModel) {
+    this.store.sItems.push({
+      itemDetail,
+      onSale: false,
+      iBought: Math.round((Math.random() * 50) + 1),
+      isle: this.getIsle(itemDetail.iCategory),
+      iStatus: 'stock',
+      price: itemDetail.iPrice * this.store.sPriceMult,
+      iStoreQuantity: 10,
+      oldPrice: 0
+    });
+    this.storeService.updateStore(this.store);
+    this.newItem = null;
+  }
+
+  public getAvailableItems() {
+    return this.allItems
+      .filter(item => !this.store.sItems.some(value => value.itemDetail.iName === item.iName))
+      .sort((a, b) => this.getIsle(a.iCategory) > this.getIsle(b.iCategory) ? 1 : -1);
+  }
+
+  private setRows(width): void {
+    console.log(width);
+    if (width > 1540) {
+      this.itemsPerRow = 4;
+    } else if (width > 1150) {
+      this.itemsPerRow = 3;
+    } else {
+      this.itemsPerRow = 2;
+    }
+  }
+
   private fetchStore(sId: any): void {
     this.storeSub = this.storeService.fetchStore('sId', '==',
       sId)
@@ -216,8 +287,9 @@ export class StoreComponent implements OnInit, OnDestroy {
 
       if (!found) {
         if (this.user.currentShoppingList.sItems.length > 0) {
-          if (!this.user.shoppingLists)
+          if (!this.user.shoppingLists) {
             this.user.shoppingLists = [];
+          }
           this.user.shoppingLists.push(this.user.currentShoppingList);
         }
       }
@@ -227,14 +299,15 @@ export class StoreComponent implements OnInit, OnDestroy {
 
       found = false;
 
-      if (this.user.shoppingLists)
-        for (let sl of this.user.shoppingLists) {
+      if (this.user.shoppingLists) {
+        for (const sl of this.user.shoppingLists) {
           if (sl.sId === this.user.preferedStore && sl.sStatus === 'pending') {
             this.user.currentShoppingList = sl;
             this.user.shoppingLists.splice(this.user.shoppingLists.indexOf(sl));
             found = true;
           }
         }
+      }
 
       if (!found) {
         this.user.currentShoppingList = {
@@ -253,32 +326,12 @@ export class StoreComponent implements OnInit, OnDestroy {
 
   }
 
-  addItemToStore(itemDetail: ItemDetailModel) {
-    this.store.sItems.push({
-      itemDetail,
-      onSale: false,
-      iBought: Math.round((Math.random() * 50) + 1),
-      isle: this.getIsle(itemDetail.iCategory),
-      iStatus: "stock",
-      price: itemDetail.iPrice * this.store.sPriceMult,
-      iStoreQuantity: 10,
-      oldPrice: 0
-    });
-    this.storeService.updateStore(this.store);
-    this.newItem = null;
-  }
-
   private getIsle(category: string) {
     for (let i = 0; i < this.categories.length; i++) {
-      if (this.categories[i] === category)
+      if (this.categories[i] === category) {
         return (i + 1);
+      }
     }
-  }
-
-  public getAvailableItems() {
-    return this.allItems
-      .filter(item => !this.store.sItems.some(value => value.itemDetail === item))
-      .sort((a, b) => this.getIsle(a.iCategory) > this.getIsle(b.iCategory) ? 1 : -1);
   }
 
 }
